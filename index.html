@@ -5,6 +5,135 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rehman Auto Industry - Home</title>
   <link rel="stylesheet" href="css/style.css">
+
+  <!-- Hero section styles: scoped to .hero so nothing here fights with css/style.css -->
+  <style>
+    /* --- FIX: Universal reset to remove default browser margins/padding --- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    .hero{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      align-items:center;
+      min-height:auto;
+      width:100%;
+      overflow:hidden;
+      padding:32px 0;
+    }
+
+    .hero-text{
+      padding:48px 64px;
+      max-width:560px;
+      justify-self:end;
+    }
+    .hero-text h1{
+      font-size:clamp(32px, 4.4vw, 54px);
+      line-height:1.08;
+      margin:0 0 18px;
+      font-weight:700;
+      letter-spacing:-.01em;
+      color:#111;
+    }
+    .hero-text p{
+      font-size:16px;
+      line-height:1.65;
+      color:#454952;
+      margin:0 0 28px;
+      max-width:48ch;
+    }
+    .hero-points{
+      display:flex;
+      flex-wrap:wrap;
+      gap:22px;
+      margin:0;
+      padding:20px 0 0;
+      border-top:1px solid #ececec;
+      list-style:none;
+    }
+    .hero-points li{
+      font-size:13.5px;
+      color:#33363d;
+    }
+    .hero-points li b{
+      display:block;
+      color:#111;
+      font-weight:600;
+      font-size:14px;
+      margin-bottom:2px;
+    }
+
+    /* ---------------- stage column ---------------- */
+    .hero-stage-col{
+      width:100%;
+      height:440px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+    }
+
+    /* Exact 1:1 canvas matching the Figma frame: 1000 x 1000. */
+    .stage{
+      position:relative;
+      width:1000px;
+      height:1000px;
+      flex-shrink:0;
+      overflow: hidden; 
+    }
+    .stage-part{
+      position:absolute;
+      animation-duration:1.4s;
+      animation-timing-function:cubic-bezier(.16,.9,.3,1);
+      animation-fill-mode:backwards; 
+    }
+    .stage-part img{
+      width:100%;
+      height:100%;
+      display:block;
+      pointer-events:none;
+    }
+    /* ---- exact Figma values: left=X, top=Y, width=W, height=H ---- */
+    .p-backwheel { left:-382px; top:-325px; width:1810px; height:1634px; z-index:6; animation-name:fly-in-bl; }
+    .p-seat      { left:-444px; top:-302px; width:1869px; height:1443px; z-index:5; animation-name:fly-in-tl; }
+    .p-stand     { left:-295px; top:-326px; width:1590px; height:1634px; z-index:4; animation-name:fly-in-top; }
+    .p-handle    { left:87px;   top:-97px;  width:709px;  height:683px;  z-index:3; animation-name:fly-in-tr; }
+    .p-fork      { left:259px;  top:-38px;  width:730px;  height:768px;  z-index:2; animation-name:fly-in-right; }
+    .p-fwheel    { left:358px;  top:300px;  width:708px;  height:700px;  z-index:1; animation-name:fly-in-br; }
+    
+    @keyframes fly-in-bl    { from{ transform:translate(-1800px, 1800px); opacity:0; } to{ transform:translate(0,0); opacity:1; } }
+    @keyframes fly-in-tl    { from{ transform:translate(-1800px,-1800px); opacity:0; } to{ transform:translate(0,0); opacity:1; } }
+    @keyframes fly-in-top   { from{ transform:translate(0,-1800px);       opacity:0; } to{ transform:translate(0,0); opacity:1; } }
+    @keyframes fly-in-tr    { from{ transform:translate(1800px,-1800px);  opacity:0; } to{ transform:translate(0,0); opacity:1; } }
+    @keyframes fly-in-right { from{ transform:translate(1800px, 0);       opacity:0; } to{ transform:translate(0,0); opacity:1; } }
+    @keyframes fly-in-br    { from{ transform:translate(1800px, 1800px);  opacity:0; } to{ transform:translate(0,0); opacity:1; } }
+    
+    @media (prefers-reduced-motion: reduce){
+      .stage-part{ animation:none !important; }
+    }
+
+    /* ---------------- mobile: text on top, bike below ---------------- */
+    @media (max-width:900px){
+      .hero{
+        grid-template-columns:1fr;
+        min-height:auto;
+        align-items: start; /* FIX: Pushes the text and bike to the very top of the hero section */
+        padding-top: 0; /* FIX: Removes any top padding on mobile */
+      }
+      .hero-text{
+        justify-self:stretch;
+        max-width:none;
+        padding: 0 24px 8px; /* FIX: Removed top padding completely */
+      }
+      .hero-stage-col{
+        height:320px;
+        padding:0;
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -44,7 +173,34 @@
   <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
   <main>
-    <!-- page content goes here -->
+
+    <section class="hero">
+
+      <div class="hero-text">
+        <h1>Every bike, assembled right.</h1>
+        <p>From the frame up, every motorbike that leaves our shop is hand-built, torqued to spec, and inspected before it ever touches the road.</p>
+
+        <ul class="hero-points">
+          <li><b>Hand-Assembled</b>every unit, by hand</li>
+          <li><b>Quality Checked</b>inspected twice</li>
+          <li><b>Genuine Parts</b>no shortcuts</li>
+        </ul>
+      </div>
+
+      <div class="hero-stage-col">
+        <div class="stage" id="stage">
+          <!-- NOTE: main frame/body SVG not yet exported - add it here once ready -->
+          <div class="stage-part p-backwheel"><img src="parts/back-wheel.svg" alt=""></div>
+          <div class="stage-part p-seat"><img src="parts/seat.svg" alt=""></div>
+          <div class="stage-part p-stand"><img src="parts/stand.svg" alt=""></div>
+          <div class="stage-part p-handle"><img src="parts/handle.svg" alt=""></div>
+          <div class="stage-part p-fork"><img src="parts/front-fork.svg" alt=""></div>
+          <div class="stage-part p-fwheel"><img src="parts/front-wheel.svg" alt=""></div>
+        </div>
+      </div>
+
+    </section>
+
   </main>
 
   <footer class="site-footer">
@@ -92,6 +248,27 @@
       &copy; 2026 Rehman Auto Industry. All Rights Reserved.
     </div>
   </footer>
+
   <script src="js/script.js"></script>
+  <script>
+    // Scale the fixed 1000x1000 stage down to fit its column with margin,
+    // keeping it centered, on load and on resize.
+    (function(){
+      const stage = document.getElementById('stage');
+      const col = document.querySelector('.hero-stage-col');
+      function fit(){
+        const margin = 0.9; // leave a little white space around the bike
+        const w = col.clientWidth  || window.innerWidth;
+        const h = col.clientHeight || window.innerHeight;
+        const scale = Math.min(
+          (w * margin) / 1000,
+          (h * margin) / 1000
+        );
+        stage.style.transform = 'scale(' + scale + ')';
+      }
+      fit();
+      window.addEventListener('resize', fit);
+    })();
+  </script>
 </body>
 </html>
