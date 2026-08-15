@@ -4,152 +4,248 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rehman Auto Industry - Home</title>
+  <meta name="description" content="Rehman Auto Industry — hand-assembled bikes, torqued to spec and inspected before they touch the road. Based in Bahawalpur.">
+
   <link rel="stylesheet" href="css/style.css">
 
-  <!-- Hero section styles: scoped to .hero so nothing here fights with css/style.css -->
+  <!-- Hero section styles: scoped to .hero / .home-header so nothing here fights with css/style.css -->
   <style>
-    /* --- FIX: Universal reset to remove default browser margins/padding --- */
-    * {
+    /* Header floats transparently over the hero image, in white */
+    body.home .site-header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: transparent;
+      border-bottom: none;
+      z-index: 30;
+    }
+    body.home .site-header nav ul li a { color: #ffffff; }
+    body.home .site-header nav ul li a:hover { color: #ffc9a8; }
+    body.home .site-header nav ul li a.active { color: var(--accent); }
+    body.home .hamburger-btn span { background-color: #ffffff; }
+
+    /* Full-bleed hero image, breaks out of main's padding */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      margin: -40px -40px 40px;
+      width: calc(100% + 80px);
+      min-height: 620px;
+      display: flex;
+      align-items: center;
+      padding: 130px 40px 60px;
+    }
+
+    .hero-bg-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.6) 0%, rgba(0,0,0,0) 22%),
+        linear-gradient(90deg, rgba(0,0,0,.74) 0%, rgba(0,0,0,.30) 55%, rgba(0,0,0,.05) 100%);
+      z-index: 1;
+    }
+
+    .hero-text {
+      position: relative;
+      z-index: 2;
+      max-width: 480px;
+    }
+
+    .hero-text .eyebrow {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #ffc9a8;
+      margin-bottom: 12px;
+    }
+
+    .hero-text h1 {
+      font-size: clamp(28px, 3.6vw, 46px);
+      line-height: 1.1;
+      margin: 0 0 16px;
+      font-weight: bold;
+      color: #ffffff;
+    }
+
+    .hero-text p {
+      font-size: 15.5px;
+      line-height: 1.65;
+      color: #e6e6e6;
+      margin: 0 0 22px;
+      max-width: 48ch;
+    }
+
+    .hero-text .btn {
+      margin-bottom: 26px;
+    }
+
+    .hero-points {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 22px;
       margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+      padding: 18px 0 0;
+      border-top: 1px solid rgba(255,255,255,.25);
+      list-style: none;
     }
-    
-    .hero{
-      display:grid;
+    .hero-points li {
+      font-size: 13.5px;
+      color: #e6e6e6;
+    }
+    .hero-points li b {
+      display: block;
+      color: #ffffff;
+      font-weight: bold;
+      font-size: 14px;
+      margin-bottom: 2px;
+    }
+
+    /* ---------------- categories section ---------------- */
+    .categories {
+      background-color: #ffffff;
+    }
+
+    .categories-grid {
+      display: grid;
       grid-template-columns: 1fr 1fr;
-      align-items:center;
-      min-height:auto;
-      width:100%;
-      overflow:hidden;
-      padding:32px 0;
+      gap: 50px;
+      align-items: center;
+      /* bleed the grid to the true right edge of the viewport, cancelling main's right padding */
+      margin-right: -40px;
+      width: calc(100% + 40px);
+      /* keep the left (text) side lined up with every other section's container gutter */
+      padding-left: max(0px, calc((100vw - 80px - 1160px) / 2));
     }
 
-    .hero-text{
-      padding:48px 64px;
-      max-width:560px;
-      justify-self:end;
-    }
-    .hero-text h1{
-      font-size:clamp(32px, 4.4vw, 54px);
-      line-height:1.08;
-      margin:0 0 18px;
-      font-weight:700;
-      letter-spacing:-.01em;
-      color:#111;
-    }
-    .hero-text p{
-      font-size:16px;
-      line-height:1.65;
-      color:#454952;
-      margin:0 0 28px;
-      max-width:48ch;
-    }
-    .hero-points{
-      display:flex;
-      flex-wrap:wrap;
-      gap:22px;
-      margin:0;
-      padding:20px 0 0;
-      border-top:1px solid #ececec;
-      list-style:none;
-    }
-    .hero-points li{
-      font-size:13.5px;
-      color:#33363d;
-    }
-    .hero-points li b{
-      display:block;
-      color:#111;
-      font-weight:600;
-      font-size:14px;
-      margin-bottom:2px;
+    .categories-text .section-head {
+      margin-bottom: 28px;
     }
 
-    /* ---------------- stage column ---------------- */
-    .hero-stage-col{
-      width:100%;
-      height:440px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      overflow:hidden;
+    .category-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
     }
 
-    /* Exact 1:1 canvas matching the Figma frame: 1000 x 1000. */
-    .stage{
-      position:relative;
-      width:1000px;
-      height:1000px;
-      flex-shrink:0;
-      overflow: hidden; 
-    }
-    .stage-part{
-      position:absolute;
-      animation-duration:1.4s;
-      animation-timing-function:cubic-bezier(.16,.9,.3,1);
-      animation-fill-mode:backwards; 
-    }
-    .stage-part img{
-      width:100%;
-      height:100%;
-      display:block;
-      pointer-events:none;
-    }
-    /* ---- exact Figma values: left=X, top=Y, width=W, height=H ---- */
-    .p-backwheel { left:-382px; top:-325px; width:1810px; height:1634px; z-index:6; animation-name:fly-in-bl; }
-    .p-seat      { left:-444px; top:-302px; width:1869px; height:1443px; z-index:5; animation-name:fly-in-tl; }
-    .p-stand     { left:-295px; top:-326px; width:1590px; height:1634px; z-index:4; animation-name:fly-in-top; }
-    .p-handle    { left:87px;   top:-97px;  width:709px;  height:683px;  z-index:3; animation-name:fly-in-tr; }
-    .p-fork      { left:259px;  top:-38px;  width:730px;  height:768px;  z-index:2; animation-name:fly-in-right; }
-    .p-fwheel    { left:358px;  top:300px;  width:708px;  height:700px;  z-index:1; animation-name:fly-in-br; }
-    
-    @keyframes fly-in-bl    { from{ transform:translate(-1800px, 1800px); opacity:0; } to{ transform:translate(0,0); opacity:1; } }
-    @keyframes fly-in-tl    { from{ transform:translate(-1800px,-1800px); opacity:0; } to{ transform:translate(0,0); opacity:1; } }
-    @keyframes fly-in-top   { from{ transform:translate(0,-1800px);       opacity:0; } to{ transform:translate(0,0); opacity:1; } }
-    @keyframes fly-in-tr    { from{ transform:translate(1800px,-1800px);  opacity:0; } to{ transform:translate(0,0); opacity:1; } }
-    @keyframes fly-in-right { from{ transform:translate(1800px, 0);       opacity:0; } to{ transform:translate(0,0); opacity:1; } }
-    @keyframes fly-in-br    { from{ transform:translate(1800px, 1800px);  opacity:0; } to{ transform:translate(0,0); opacity:1; } }
-    
-    @media (prefers-reduced-motion: reduce){
-      .stage-part{ animation:none !important; }
+    .category-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 12px;
+      padding: 14px 12px 20px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background-color: var(--grey-alt);
+      text-decoration: none;
+      transition: background-color 0.25s ease, border-color 0.25s ease,
+                  transform 0.25s ease, box-shadow 0.25s ease;
     }
 
-    /* ---------------- mobile: text on top, bike below ---------------- */
-    @media (max-width:900px){
-      .hero{
-        grid-template-columns:1fr;
-        min-height:auto;
-        align-items: start; /* FIX: Pushes the text and bike to the very top of the hero section */
-        padding-top: 0; /* FIX: Removes any top padding on mobile */
+    .category-item:hover {
+      background-color: var(--accent);
+      border-color: var(--accent);
+      transform: translateY(-6px);
+      box-shadow: 0 14px 26px rgba(228, 87, 30, 0.25);
+    }
+
+    .category-item img {
+      width: 100px;
+      height: 100px;
+      transition: filter 0.2s ease, transform 0.3s ease;
+    }
+
+    .category-item:hover img {
+      transform: scale(1.08);
+    }
+
+    .category-item span {
+      font-size: 13px;
+      font-weight: bold;
+      color: var(--ink);
+      line-height: 1.3;
+      transition: color 0.2s ease;
+    }
+
+    .category-item:hover span {
+      color: #ffffff;
+    }
+
+    .categories-image {
+      align-self: start;
+      margin-top: -100px; /* cancels hero's 40px bottom margin + section's 60px top padding */
+    }
+
+    .categories-image img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px 0 0 8px;
+    }
+
+    @media (max-width: 768px) {
+      .categories-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        margin-right: -20px;
+        width: calc(100% + 20px);
+        padding-left: 0;
       }
-      .hero-text{
-        justify-self:stretch;
-        max-width:none;
-        padding: 0 24px 8px; /* FIX: Removed top padding completely */
+      .categories-image {
+        order: -1;
+        margin-top: -64px; /* cancels hero's 24px bottom margin + section's 40px top padding on mobile */
       }
-      .hero-stage-col{
-        height:320px;
-        padding:0;
+      .category-list {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+      }
+    }
+
+    /* ---------------- mobile ---------------- */
+    @media (max-width: 768px) {
+      .hero {
+        margin: -24px -20px 24px;
+        width: calc(100% + 40px);
+        min-height: 520px;
+        padding: 100px 20px 40px;
+      }
+      .hero-text {
+        max-width: none;
       }
     }
   </style>
 </head>
-<body>
+<body class="home">
 
   <header class="site-header">
     <div class="logo">
-      <img src="images/logo.png" alt="Rehman Auto Industry Logo">
+      <img src="images/logo.svg" alt="Rehman Auto Industry Logo">
     </div>
 
     <nav class="desktop-nav">
       <ul>
-        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html" class="active">Home</a></li>
         <li><a href="services.html">Services</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
     </nav>
+
+    <div class="header-actions">
+      <a href="contact.html" class="btn btn-outline-light">Get a Quote</a>
+    </div>
 
     <button class="hamburger-btn" id="hamburgerBtn" aria-label="Open menu">
       <span></span>
@@ -175,30 +271,236 @@
   <main>
 
     <section class="hero">
+      <img class="hero-bg-img" src="images/hero-index.svg" alt="Assembled bike in the Rehman Auto Industry workshop">
 
       <div class="hero-text">
-        <h1>Every bike, assembled right.</h1>
-        <p>From the frame up, every motorbike that leaves our shop is hand-built, torqued to spec, and inspected before it ever touches the road.</p>
+        <span class="eyebrow" data-reveal="up">Rehman Auto Industry</span>
+        <h1 data-reveal="up" style="--reveal-delay:120ms">Every bike, assembled right.</h1>
+        <p data-reveal="up" style="--reveal-delay:240ms">From the frame up, every bike that leaves our shop is hand-built, torqued to spec, and inspected before it ever touches the road.</p>
 
-        <ul class="hero-points">
+        <a href="contact.html" class="btn btn-primary" data-reveal="up" style="--reveal-delay:340ms">Get a Free Quote</a>
+
+        <ul class="hero-points" data-reveal="up" style="--reveal-delay:440ms">
           <li><b>Hand-Assembled</b>every unit, by hand</li>
           <li><b>Quality Checked</b>inspected twice</li>
           <li><b>Genuine Parts</b>no shortcuts</li>
         </ul>
       </div>
+    </section>
 
-      <div class="hero-stage-col">
-        <div class="stage" id="stage">
-          <!-- NOTE: main frame/body SVG not yet exported - add it here once ready -->
-          <div class="stage-part p-backwheel"><img src="parts/back-wheel.svg" alt=""></div>
-          <div class="stage-part p-seat"><img src="parts/seat.svg" alt=""></div>
-          <div class="stage-part p-stand"><img src="parts/stand.svg" alt=""></div>
-          <div class="stage-part p-handle"><img src="parts/handle.svg" alt=""></div>
-          <div class="stage-part p-fork"><img src="parts/front-fork.svg" alt=""></div>
-          <div class="stage-part p-fwheel"><img src="parts/front-wheel.svg" alt=""></div>
+    <!-- ================= CATEGORIES ================= -->
+    <section class="categories">
+      <div class="categories-grid">
+
+        <div class="categories-text" data-reveal="left">
+          <div class="section-head">
+            <p class="eyebrow">Shop by</p>
+            <h2>Categories</h2>
+            <p>Every part on our floor is sorted by category, so whether it's a full engine rebuild or a single bolt, our team knows exactly where to look.</p>
+          </div>
+
+          <div class="category-list">
+            <a href="services.html" class="category-item" data-reveal="up">
+              <img src="images/category1.svg" alt="">
+              <span>Engine Parts</span>
+            </a>
+            <a href="services.html" class="category-item" data-reveal="up">
+              <img src="images/category2.svg" alt="">
+              <span>Frame &amp; Body</span>
+            </a>
+            <a href="services.html" class="category-item" data-reveal="up">
+              <img src="images/category3.svg" alt="">
+              <span>Wheels &amp; Tyres</span>
+            </a>
+            <a href="services.html" class="category-item" data-reveal="up">
+              <img src="images/category4.svg" alt="">
+              <span>Brakes &amp; Suspension</span>
+            </a>
+            <a href="services.html" class="category-item" data-reveal="up">
+              <img src="images/category5.svg" alt="">
+              <span>Electricals &amp; Lighting</span>
+            </a>
+            <a href="services.html" class="category-item" data-reveal="up">
+              <img src="images/category6.svg" alt="">
+              <span>Exhaust Systems</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="categories-image" data-reveal="right">
+          <img src="images/xyz.svg" alt="Bike on display in the Rehman Auto Industry workshop">
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= SERVICES ================= -->
+    <section class="services">
+      <div class="container">
+        <div class="section-head" data-reveal="up">
+          <p class="eyebrow">What we do</p>
+          <h2>Built the right way, every time.</h2>
+          <p>Three services, one standard: nothing leaves the floor until it's checked twice.</p>
+        </div>
+
+        <div class="service-grid">
+
+          <div class="service-card" data-reveal="up">
+            <span class="ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 1 1-5.4 5.4L4 17v3h3l5.3-5.3a4 4 0 1 1 5.4-5.4z"/></svg>
+            </span>
+            <h3>Bike Assembly</h3>
+            <p>Every unit is hand-built from the frame up by trained technicians, torqued to manufacturer spec at each stage.</p>
+            <a href="services.html">See the process &rarr;</a>
+          </div>
+
+          <div class="service-card" data-reveal="up">
+            <span class="ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            </span>
+            <h3>Quality Inspection</h3>
+            <p>A two-point check — one mid-build, one final — covering torque, alignment, brakes, and electricals before handover.</p>
+            <a href="services.html">View our checklist &rarr;</a>
+          </div>
+
+          <div class="service-card" data-reveal="up">
+            <span class="ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/><path d="M4 4h2l1.5 12h10L19 8H7.2"/></svg>
+            </span>
+            <h3>Spare Parts Sourcing</h3>
+            <p>Genuine and OEM-equivalent parts only, sourced through vetted suppliers — no shortcuts, no grey-market swaps.</p>
+            <a href="services.html">Browse parts we stock &rarr;</a>
+          </div>
+
         </div>
       </div>
+    </section>
 
+    <!-- ================= WORKSHOP GALLERY ================= -->
+    <section class="gallery">
+      <div class="container">
+        <div class="section-head row" data-reveal="up">
+          <div>
+            <p class="eyebrow">From the workshop</p>
+            <h2>Recent builds off our floor.</h2>
+          </div>
+          <a href="services.html" class="view-all">View all builds &rarr;</a>
+        </div>
+
+        <div class="gallery-grid">
+
+          <div class="gallery-card" data-reveal="up">
+            <div class="thumb">
+              <span class="badge">Fleet Order</span>
+              <img src="images/work-1.svg" alt="Row of assembled 70cc commuter bikes ready for delivery">
+            </div>
+            <div class="body">
+              <h4>70cc Commuter — Batch of 12</h4>
+              <span class="meta">Dealer fleet · Bahawalpur</span>
+            </div>
+          </div>
+
+          <div class="gallery-card" data-reveal="up">
+            <div class="thumb">
+              <span class="badge">Custom Build</span>
+              <img src="images/work-2.svg" alt="Custom assembled 125cc bike with matte finish">
+            </div>
+            <div class="body">
+              <h4>125cc Sport — Matte Build</h4>
+              <span class="meta">Custom order</span>
+            </div>
+          </div>
+
+          <div class="gallery-card" data-reveal="up">
+            <div class="thumb">
+              <span class="badge">Inspection</span>
+              <img src="images/work-3.png" alt="Technician performing final quality inspection on a bike">
+            </div>
+            <div class="body">
+              <h4>Final Torque &amp; Brake Check</h4>
+              <span class="meta">Quality inspection</span>
+            </div>
+          </div>
+
+          <div class="gallery-card" data-reveal="up">
+            <div class="thumb">
+              <span class="badge">Assembly</span>
+              <img src="images/work-4.png" alt="Bike frame on the assembly stand mid-build">
+            </div>
+            <div class="body">
+              <h4>Frame-Up Assembly</h4>
+              <span class="meta">In progress</span>
+            </div>
+          </div>
+
+          <div class="gallery-card" data-reveal="up">
+            <div class="thumb">
+              <span class="badge">Fleet Order</span>
+              <img src="images/work-5.png" alt="Delivery bay with completed bikes lined up">
+            </div>
+            <div class="body">
+              <h4>Delivery Bay — 8 Units</h4>
+              <span class="meta">Ready for dispatch</span>
+            </div>
+          </div>
+
+          <div class="gallery-card" data-reveal="up">
+            <div class="thumb">
+              <span class="badge">Custom Build</span>
+              <img src="images/work-6.png" alt="Close up of hand-assembled bike engine and exhaust">
+            </div>
+            <div class="body">
+              <h4>Engine &amp; Exhaust Fit-Up</h4>
+              <span class="meta">Custom order</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CTA BANNERS ================= -->
+    <section class="cta-banners">
+      <div class="container">
+        <div class="banner-grid">
+
+          <div class="banner" data-reveal="left">
+            <img src="images/promo-quote.png" alt="">
+            <div class="banner-copy">
+              <p class="eyebrow">Get started</p>
+              <h3>Get a free assembly quote</h3>
+              <p>Tell us the units and specs — we'll get back to you within one business day.</p>
+              <a href="contact.html" class="btn btn-primary">Request a Quote</a>
+            </div>
+          </div>
+
+          <div class="banner" data-reveal="right">
+            <img src="images/promo-dealer.png" alt="">
+            <div class="banner-copy">
+              <p class="eyebrow">For dealers</p>
+              <h3>Now booking fleet orders</h3>
+              <p>Partner with us for consistent, inspected assembly at scale, built to your delivery schedule.</p>
+              <a href="contact.html" class="btn btn-outline-light">Become a Partner</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= BRAND STRIP ================= -->
+    <section class="brand-strip">
+      <div class="container">
+        <p class="label" data-reveal="up">Genuine parts from brands we trust</p>
+        <div class="brand-row">
+          <img src="images/b-1.png" alt="Honda" data-reveal="fade">
+          <img src="images/b-2.png" alt="Yamaha" data-reveal="fade">
+          <img src="images/b-3.png" alt="Suzuki" data-reveal="fade">
+          <img src="images/b-4.png" alt="United" data-reveal="fade">
+          <img src="images/b-5.png" alt="Road Prince" data-reveal="fade">
+          <img src="images/b-6.png" alt="Habib" data-reveal="fade">
+        </div>
+      </div>
     </section>
 
   </main>
@@ -206,8 +508,8 @@
   <footer class="site-footer">
     <div class="footer-columns">
       <div class="footer-col">
-        <img src="images/logo.png" alt="Rehman Auto Industry Logo" class="footer-logo">
-        <p class="footer-tagline">Quality motorbike assembly since day one.</p>
+        <img src="images/logo.svg" alt="Rehman Auto Industry Logo" class="footer-logo">
+        <p class="footer-tagline">Quality bike assembly since day one.</p>
       </div>
 
       <div class="footer-col">
@@ -223,7 +525,7 @@
       <div class="footer-col">
         <h4>Our Services</h4>
         <ul>
-          <li><a href="services.html">Motorbike Assembly</a></li>
+          <li><a href="services.html">Bike Assembly</a></li>
           <li><a href="services.html">Quality Inspection</a></li>
           <li><a href="services.html">Spare Parts</a></li>
         </ul>
@@ -241,7 +543,15 @@
 
     <!-- Minimal mobile footer -->
     <div class="footer-mobile">
-      <img src="images/logo.png" alt="Rehman Auto Industry Logo" class="footer-logo-mobile">
+      <img src="images/logo.svg" alt="Rehman Auto Industry Logo" class="footer-logo-mobile">
+      <nav class="footer-mobile-nav">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
     </div>
 
     <div class="footer-bottom">
@@ -250,25 +560,6 @@
   </footer>
 
   <script src="js/script.js"></script>
-  <script>
-    // Scale the fixed 1000x1000 stage down to fit its column with margin,
-    // keeping it centered, on load and on resize.
-    (function(){
-      const stage = document.getElementById('stage');
-      const col = document.querySelector('.hero-stage-col');
-      function fit(){
-        const margin = 0.9; // leave a little white space around the bike
-        const w = col.clientWidth  || window.innerWidth;
-        const h = col.clientHeight || window.innerHeight;
-        const scale = Math.min(
-          (w * margin) / 1000,
-          (h * margin) / 1000
-        );
-        stage.style.transform = 'scale(' + scale + ')';
-      }
-      fit();
-      window.addEventListener('resize', fit);
-    })();
-  </script>
+  <script src="js/animations.js"></script>
 </body>
 </html>
