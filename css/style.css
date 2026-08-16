@@ -65,6 +65,12 @@ html {
 .gallery-grid [data-reveal]:nth-child(5) { --reveal-delay: 320ms; }
 .gallery-grid [data-reveal]:nth-child(6) { --reveal-delay: 400ms; }
 
+.product-grid [data-reveal]:nth-child(1) { --reveal-delay: 0ms; }
+.product-grid [data-reveal]:nth-child(2) { --reveal-delay: 60ms; }
+.product-grid [data-reveal]:nth-child(3) { --reveal-delay: 120ms; }
+.product-grid [data-reveal]:nth-child(4) { --reveal-delay: 180ms; }
+.product-grid [data-reveal]:nth-child(5) { --reveal-delay: 240ms; }
+
 .brand-row [data-reveal]:nth-child(1) { --reveal-delay: 0ms; }
 .brand-row [data-reveal]:nth-child(2) { --reveal-delay: 60ms; }
 .brand-row [data-reveal]:nth-child(3) { --reveal-delay: 120ms; }
@@ -559,6 +565,86 @@ section {
   color: #666666;
 }
 
+/* PRODUCTS PAGE */
+.page-intro {
+  padding-bottom: 20px;
+}
+
+.page-intro h1 {
+  font-size: 32px;
+  margin: 10px 0 8px;
+}
+
+.page-intro p {
+  color: #555555;
+  max-width: 520px;
+}
+
+.product-category {
+  padding: 40px 0;
+  border-top: 1px solid var(--line);
+}
+
+.product-category:first-of-type {
+  border-top: none;
+}
+
+.product-category .section-head h2 {
+  font-size: 22px;
+  margin-bottom: 0;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 18px;
+}
+
+.product-card {
+  background-color: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.10);
+}
+
+.product-card .thumb {
+  aspect-ratio: 1 / 1;
+  background-color: var(--grey-alt);
+  overflow: hidden;
+}
+
+.product-card .thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.4s ease;
+}
+
+.product-card:hover .thumb img {
+  transform: scale(1.06);
+}
+
+.product-card .body {
+  padding: 12px 14px 16px;
+}
+
+.product-card h4 {
+  font-size: 13.5px;
+  margin-bottom: 4px;
+}
+
+.product-card .price {
+  font-size: 13px;
+  font-weight: bold;
+  color: var(--ink);
+}
+
 /* CTA BANNERS */
 .banner-grid {
   display: grid;
@@ -782,6 +868,10 @@ section {
   .gallery-grid {
     grid-template-columns: 1fr 1fr;
   }
+
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 @media (max-width: 768px) {
@@ -838,6 +928,19 @@ section {
 
   .gallery-card .meta {
     font-size: 11.5px;
+  }
+
+  .product-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .product-card .body {
+    padding: 8px 10px 12px;
+  }
+
+  .product-card h4 {
+    font-size: 12.5px;
   }
 
   .banner-grid {
