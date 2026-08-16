@@ -3,25 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rehman Auto Industry - Home</title>
+  <title>Rehman Auto Industry - Services</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
   <header class="site-header">
     <div class="logo">
-      <img src="images/logo.png" alt="Rehman Auto Industry Logo">
+      <img src="images/logo.svg" alt="Rehman Auto Industry Logo">
     </div>
 
     <nav class="desktop-nav">
       <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="products.html">Products</a></li>
-        <li><a href="services.html">Services</a></li>
+        <li><a href="services.html" class="active">Services</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
     </nav>
+
+    <div class="header-actions">
+      <a href="contact.html" class="btn btn-outline-light">Get a Quote</a>
+    </div>
 
     <button class="hamburger-btn" id="hamburgerBtn" aria-label="Open menu">
       <span></span>
@@ -49,11 +53,16 @@
     <!-- page content goes here -->
   </main>
 
+  <!-- Back to top -->
+  <button id="backToTop" class="back-to-top" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+
   <footer class="site-footer">
     <div class="footer-columns">
       <div class="footer-col">
-        <img src="images/logo.png" alt="Rehman Auto Industry Logo" class="footer-logo">
-        <p class="footer-tagline">Quality motorbike assembly since day one.</p>
+        <img src="images/logo.svg" alt="Rehman Auto Industry Logo" class="footer-logo">
+        <p class="footer-tagline">Quality bike assembly since day one.</p>
       </div>
 
       <div class="footer-col">
@@ -70,7 +79,7 @@
       <div class="footer-col">
         <h4>Our Services</h4>
         <ul>
-          <li><a href="services.html">Motorbike Assembly</a></li>
+          <li><a href="services.html">Bike Assembly</a></li>
           <li><a href="services.html">Quality Inspection</a></li>
           <li><a href="services.html">Spare Parts</a></li>
         </ul>
@@ -88,13 +97,24 @@
 
     <!-- Minimal mobile footer -->
     <div class="footer-mobile">
-      <img src="images/logo.png" alt="Rehman Auto Industry Logo" class="footer-logo-mobile">
+      <img src="images/logo.svg" alt="Rehman Auto Industry Logo" class="footer-logo-mobile">
+      <nav class="footer-mobile-nav">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="products.html">Products</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
     </div>
 
     <div class="footer-bottom">
       &copy; 2026 Rehman Auto Industry. All Rights Reserved.
     </div>
   </footer>
+
   <script src="js/script.js"></script>
+  <script src="js/animations.js"></script>
 </body>
 </html>
