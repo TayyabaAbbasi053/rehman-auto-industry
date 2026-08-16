@@ -8,6 +8,46 @@
 
   if (!input) return;
 
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function hideCard(card) {
+    if (card.classList.contains('is-hidden')) return;
+
+    if (reduceMotion) {
+      card.classList.add('is-hidden');
+      return;
+    }
+
+    card.classList.add('is-fading');
+
+    var handled = false;
+    function onEnd(e) {
+      if (e.propertyName !== 'opacity' || handled) return;
+      handled = true;
+      card.classList.add('is-hidden');
+      card.removeEventListener('transitionend', onEnd);
+    }
+    card.addEventListener('transitionend', onEnd);
+  }
+
+  function showCard(card) {
+    var wasHidden = card.classList.contains('is-hidden') || card.classList.contains('is-fading');
+    if (!wasHidden) return;
+
+    card.classList.remove('is-hidden');
+
+    if (reduceMotion) {
+      card.classList.remove('is-fading');
+      return;
+    }
+
+    card.classList.add('is-fading');
+    void card.offsetWidth; // force reflow so the fade-in actually transitions
+    requestAnimationFrame(function () {
+      card.classList.remove('is-fading');
+    });
+  }
+
   function runFilter() {
     var query = input.value.trim().toLowerCase();
     var anyVisible = false;
@@ -24,8 +64,13 @@
         var name = card.querySelector('h4');
         var text = name ? name.textContent.toLowerCase() : '';
         var matches = query === '' || text.indexOf(query) !== -1;
-        card.classList.toggle('is-hidden', !matches);
-        if (matches) visibleInCategory++;
+
+        if (matches) {
+          showCard(card);
+          visibleInCategory++;
+        } else {
+          hideCard(card);
+        }
       });
 
       var categoryHidden = query !== '' && visibleInCategory === 0;
@@ -51,6 +96,8 @@
 (function () {
   var links = document.querySelectorAll('.qn-link');
   var toolbar = document.querySelector('.product-toolbar');
+  var quicknav = document.querySelector('.category-quicknav');
+  var pill = quicknav ? quicknav.querySelector('.qn-pill') : null;
   var sections = document.querySelectorAll('.product-category');
   if (!links.length || !sections.length) return;
 
@@ -60,10 +107,24 @@
     linkMap[id] = link;
   });
 
+  function movePill(link) {
+    if (!pill || !link) return;
+    pill.style.left = link.offsetLeft + 'px';
+    pill.style.width = link.offsetWidth + 'px';
+    pill.classList.add('is-ready');
+  }
+
   function setActive(id) {
     links.forEach(function (link) { link.classList.remove('active'); });
-    if (linkMap[id]) linkMap[id].classList.add('active');
+    if (linkMap[id]) {
+      linkMap[id].classList.add('active');
+      movePill(linkMap[id]);
+    }
   }
+
+  // Highlight the first category by default so the pill has a home
+  // before the user has scrolled or clicked anything.
+  setActive(links[0].getAttribute('href').replace('#', ''));
 
   if ('IntersectionObserver' in window) {
     var toolbarHeight = toolbar ? toolbar.offsetHeight : 0;
@@ -85,6 +146,11 @@
       setActive(link.getAttribute('href').replace('#', ''));
     });
   });
+
+  window.addEventListener('resize', function () {
+    var current = quicknav ? quicknav.querySelector('.qn-link.active') : null;
+    if (current) movePill(current);
+  }, { passive: true });
 })();
 
 // ---------- Sticky toolbar shadow ----------

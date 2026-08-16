@@ -155,15 +155,16 @@
       </div>
     </section>
 
-    <section class="product-toolbar" data-reveal="up">
+    <section class="product-toolbar">
       <div class="container">
-        <div class="search-bar">
+        <div class="search-bar" data-reveal="up">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>
           <input type="text" id="productSearch" placeholder="Search products, e.g. 'piston kit'" aria-label="Search products">
           <button type="button" class="search-clear" id="searchClear" aria-label="Clear search">&times;</button>
         </div>
 
-        <nav class="category-quicknav" id="categoryQuicknav" aria-label="Jump to category">
+        <nav class="category-quicknav" id="categoryQuicknav" aria-label="Jump to category" data-reveal="up" style="--reveal-delay:120ms">
+          <span class="qn-pill" aria-hidden="true"></span>
           <a href="#engine-parts" class="qn-link">Engine Parts</a>
           <a href="#frame-body" class="qn-link">Frame &amp; Body</a>
           <a href="#wheels-tyres" class="qn-link">Wheels &amp; Tyres</a>
