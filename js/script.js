@@ -29,3 +29,40 @@ if (mobileSidebar) {
 document.addEventListener('keydown', function (e) {
   if (e.key === 'Escape') closeSidebar();
 });
+
+// ---------- Sticky header shadow on scroll ----------
+const siteHeader = document.querySelector('.site-header');
+
+function updateHeaderOnScroll() {
+  if (!siteHeader) return;
+  if (window.scrollY > 40) {
+    siteHeader.classList.add('scrolled');
+  } else {
+    siteHeader.classList.remove('scrolled');
+  }
+}
+
+if (siteHeader) {
+  updateHeaderOnScroll();
+  window.addEventListener('scroll', updateHeaderOnScroll, { passive: true });
+}
+
+// ---------- Back-to-top button ----------
+const backToTopBtn = document.getElementById('backToTop');
+
+function updateBackToTop() {
+  if (!backToTopBtn) return;
+  if (window.scrollY > 500) {
+    backToTopBtn.classList.add('visible');
+  } else {
+    backToTopBtn.classList.remove('visible');
+  }
+}
+
+if (backToTopBtn) {
+  updateBackToTop();
+  window.addEventListener('scroll', updateBackToTop, { passive: true });
+  backToTopBtn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+}
