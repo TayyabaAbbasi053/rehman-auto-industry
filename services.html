@@ -4,9 +4,267 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rehman Auto Industry - Services</title>
+  <meta name="description" content="Rehman Auto Industry services — hand assembly, two-point quality inspection, and genuine spare parts sourcing, all done in-house in Bahawalpur.">
+
   <link rel="stylesheet" href="css/style.css">
+
+  <!-- Hero section styles: scoped to .hero / .services-header so nothing here fights with css/style.css -->
+  <style>
+    /* Header floats transparently over the hero image, in white */
+    body.services .site-header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: transparent;
+      border-bottom: none;
+      z-index: 30;
+    }
+    body.services .site-header nav ul li a { color: #ffffff; }
+    body.services .site-header nav ul li a:hover { color: #ffc9a8; }
+    body.services .site-header nav ul li a.active { color: var(--accent); }
+    body.services .hamburger-btn span { background-color: #ffffff; }
+
+    /* Full-bleed hero image, breaks out of main's padding. */
+    .hero-services {
+      position: relative;
+      overflow: visible;
+      margin: -40px -40px 60px;
+      width: calc(100% + 80px);
+      min-height: 480px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 130px 40px 32px;
+      text-align: center;
+    }
+
+    .hero-bg-clip {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .hero-bg-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+
+    .hero-bg-clip::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.25) 45%, rgba(0,0,0,.65) 100%);
+      z-index: 1;
+    }
+
+    .hero-services-center {
+      position: relative;
+      z-index: 2;
+      max-width: none;
+      width: 100%;
+      padding: 0 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero-heading {
+      margin: 0;
+      width: 100%;
+      text-transform: uppercase;
+      color: #ffffff;
+    }
+
+    .hero-heading .line {
+      display: block;
+      width: 100%;
+      text-align: center;
+      line-height: 1;
+    }
+
+    /* thin lead-in word, like "POWER" in the reference site */
+    .hero-heading .line-1 {
+      font-weight: 400;
+      font-size: clamp(18px, 3vw, 36px);
+      letter-spacing: 0.12em;
+      margin-bottom: 6px;
+    }
+
+    /* heavy phrase the bike image overlaps — one word picks up the accent color */
+    .hero-heading .line-2 {
+      font-weight: 900;
+      font-size: clamp(36px, 7.5vw, 88px);
+      letter-spacing: -0.01em;
+    }
+
+    .hero-heading .line-2 .accent-word {
+      color: var(--accent);
+    }
+
+    /* Reserve room in the stack for the overlapping image so the
+       heading doesn't get crowded when it hides part of line-2 */
+    .hero-heading-spacer {
+      height: clamp(50px, 9vw, 100px);
+    }
+
+    /* The image that sits ON TOP of the heading, hiding part of it —
+       centered over the bold line, allowed to spill slightly below
+       the hero into the section beneath. */
+    .hero-upper-img {
+      position: absolute;
+      left: 26%;
+      top: 16%;
+      transform: translate(-50%, -50%);
+      width: min(520px, 78%);
+      z-index: 3;
+      pointer-events: none;
+      filter: drop-shadow(0 30px 40px rgba(0,0,0,.45));
+    }
+
+    /* ---------------- mobile ---------------- */
+    @media (max-width: 768px) {
+      .hero-services {
+        margin: -24px -20px 40px;
+        width: calc(100% + 40px);
+        min-height: 420px;
+        padding: 96px 20px 24px;
+      }
+      .hero-upper-img {
+        width: min(320px, 88%);
+        left: 15%;
+        top: 38%;
+      }
+      .hero-heading-spacer {
+        height: clamp(36px, 16vw, 70px);
+      }
+    }
+
+    /* ---------------- services detail (alternating rows) ---------------- */
+    .services-detail {
+      background-color: #ffffff;
+    }
+
+    .service-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 90px;
+      margin-top: 10px;
+    }
+
+    .service-row {
+      display: flex;
+      align-items: center;
+      gap: 64px;
+    }
+
+    /* alternate: odd rows = image left / text right (default source order),
+       even rows = image right / text left */
+    .service-row.reverse {
+      flex-direction: row-reverse;
+    }
+
+    .service-row-media,
+    .service-row-content {
+      flex: 1 1 50%;
+      min-width: 0;
+    }
+
+    .service-row-media img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 10px;
+    }
+
+    @media (min-width: 769px) {
+      .service-row-media img {
+        width: 68%;
+        margin: 0 auto;
+      }
+    }
+
+    .service-row-number {
+      display: inline-block;
+      font-size: 12.5px;
+      font-weight: bold;
+      letter-spacing: 0.08em;
+      color: var(--accent-dark);
+      background-color: var(--accent-tint);
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+    }
+
+    .service-row-content h3 {
+      font-size: 26px;
+      line-height: 1.25;
+      color: var(--ink);
+      margin-bottom: 14px;
+    }
+
+    .service-row-content > p {
+      font-size: 15px;
+      line-height: 1.7;
+      color: #555555;
+      margin-bottom: 22px;
+    }
+
+    .service-row-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .service-row-list li {
+      position: relative;
+      padding-left: 28px;
+      font-size: 14px;
+      color: #333333;
+    }
+
+    .service-row-list li::before {
+      content: "\2713";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 18px;
+      height: 18px;
+      line-height: 18px;
+      text-align: center;
+      border-radius: 50%;
+      background-color: var(--accent);
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: bold;
+    }
+
+    @media (max-width: 768px) {
+      .service-rows {
+        gap: 56px;
+      }
+
+      .service-row,
+      .service-row.reverse {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 24px;
+      }
+
+      .service-row-content h3 {
+        font-size: 21px;
+      }
+    }
+  </style>
 </head>
-<body>
+<body class="services">
 
   <header class="site-header">
     <div class="logo">
@@ -50,7 +308,91 @@
   <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
   <main>
-    <!-- page content goes here -->
+
+    <section class="hero hero-services">
+      <div class="hero-bg-clip">
+        <img class="hero-bg-img" src="images/hero-services.svg" alt="Technician working on a motorbike in the Rehman Auto Industry service bay">
+      </div>
+
+      <div class="hero-services-center">
+        <h1 class="hero-heading" data-reveal="up" style="--reveal-delay:100ms">
+          <span class="line line-1">Built For</span>
+          <span class="line line-2">The <span class="accent-word">Road</span> Ahead</span>
+        </h1>
+
+        <!-- keeps content clear of the overlapping image -->
+        <div class="hero-heading-spacer" aria-hidden="true"></div>
+      </div>
+
+      <img class="hero-upper-img" src="images/upper.svg" alt="" data-reveal="zoom" style="--reveal-delay:200ms">
+    </section>
+
+    <!-- ================= SERVICES DETAIL ================= -->
+    <section class="services-detail">
+      <div class="container">
+        <div class="section-head" data-reveal="up">
+          <p class="eyebrow">What we offer</p>
+          <h2>Three services, one standard of work.</h2>
+          <p>From the first bolt to the final handover, every bike is hand-assembled, inspected twice, and built with genuine parts — no shortcuts, no exceptions.</p>
+        </div>
+
+        <div class="service-rows">
+
+          <!-- 01 -->
+          <div class="service-row">
+            <div class="service-row-media" data-reveal="left">
+              <img src="images/1.svg" alt="Technician hand-assembling a motorbike frame in the workshop">
+            </div>
+            <div class="service-row-content" data-reveal="right">
+              <span class="service-row-number">01</span>
+              <h3>Bike Assembly</h3>
+              <p>Every unit that leaves our floor is built by hand, frame up, by technicians trained on the exact fitment and torque spec for each model — no shortcuts, no rushed stations. Each bike moves through a fixed sequence of build stations, and no unit advances to the next stage until the current one is fully signed off, so the process stays consistent whether it's a single custom order or a fleet batch of twenty.</p>
+              <ul class="service-row-list">
+                <li>Frame, engine &amp; body fitted by hand</li>
+                <li>Torqued to manufacturer spec</li>
+                <li>Logged at every build stage</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- 02 -->
+          <div class="service-row reverse">
+            <div class="service-row-media" data-reveal="right">
+              <img src="images/2.svg" alt="Technician performing a quality inspection checklist on a motorbike">
+            </div>
+            <div class="service-row-content" data-reveal="left">
+              <span class="service-row-number">02</span>
+              <h3>Quality Inspection</h3>
+              <p>Nothing leaves the floor until it's checked twice — once mid-build, once at final handover — covering torque, alignment, brakes, and electricals. Every check is recorded against the unit's build sheet, so if a question ever comes up after delivery, we can trace exactly what was inspected, by whom, and when.</p>
+              <ul class="service-row-list">
+                <li>Mid-build &amp; final inspection</li>
+                <li>Brake, torque &amp; alignment checks</li>
+                <li>Signed off before it ships</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- 03 -->
+          <div class="service-row">
+            <div class="service-row-media" data-reveal="left">
+              <img src="images/3.svg" alt="Shelves of genuine motorbike spare parts in stock">
+            </div>
+            <div class="service-row-content" data-reveal="right">
+              <span class="service-row-number">03</span>
+              <h3>Spare Parts Sourcing</h3>
+              <p>We source genuine and OEM-equivalent parts through vetted suppliers only, so every bike — and every repair after it — runs on parts you can trust. Whether it's a full engine rebuild or a single replacement bolt, our sourcing team checks each part against the manufacturer's spec before it ever reaches the workshop floor.</p>
+              <ul class="service-row-list">
+                <li>Genuine &amp; OEM-equivalent parts</li>
+                <li>Vetted supplier network</li>
+                <li>No grey-market swaps</li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <!-- Back to top -->
