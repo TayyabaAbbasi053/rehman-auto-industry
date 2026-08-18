@@ -190,11 +190,21 @@
       min-width: 0;
     }
 
+    .about-row-media {
+      overflow: hidden;
+      border-radius: 10px;
+    }
+
     .about-row-media img {
       width: 100%;
       height: auto;
       display: block;
       border-radius: 10px;
+      transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .about-row-media:hover img {
+      transform: scale(1.05);
     }
 
     .about-row-number {
@@ -298,7 +308,31 @@
       align-items: center;
       justify-content: center;
       margin: 0 auto 16px;
-      transition: transform 0.3s ease;
+      transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .value-card:hover .ico {
+      background-color: var(--accent);
+      color: #ffffff;
+    }
+
+    /* subtle continuous float on the intro-card icons to add life without being distracting */
+    @keyframes about-icon-float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+
+    .about-intro-item .ico {
+      animation: about-icon-float 3.2s ease-in-out infinite;
+    }
+
+    .about-intro-item:nth-child(2) .ico { animation-delay: 0.3s; }
+    .about-intro-item:nth-child(3) .ico { animation-delay: 0.6s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .about-intro-item .ico {
+        animation: none;
+      }
     }
 
     .value-card:hover .ico {
@@ -448,7 +482,7 @@
         <div class="about-intro-card" data-reveal="up">
           <div class="about-intro-grid">
 
-            <div class="about-intro-item">
+            <div class="about-intro-item" data-reveal="up" style="--reveal-delay:0ms">
               <span class="ico">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 1 1-5.4 5.4L4 17v3h3l5.3-5.3a4 4 0 1 1 5.4-5.4z"/></svg>
               </span>
@@ -456,7 +490,7 @@
               <p>Every unit is built frame-up by trained technicians, torqued to spec at each stage.</p>
             </div>
 
-            <div class="about-intro-item">
+            <div class="about-intro-item" data-reveal="up" style="--reveal-delay:120ms">
               <span class="ico">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
               </span>
@@ -464,7 +498,7 @@
               <p>A two-point inspection, mid-build and final, before anything leaves the workshop.</p>
             </div>
 
-            <div class="about-intro-item">
+            <div class="about-intro-item" data-reveal="up" style="--reveal-delay:240ms">
               <span class="ico">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/><path d="M4 4h2l1.5 12h10L19 8H7.2"/></svg>
               </span>
@@ -493,9 +527,9 @@
               <p>Rehman Auto Industry began as a small assembly bay on Hasilpur Road, Bahawalpur, with a handful of technicians and one rule that never changed: nothing leaves the floor unless it's built the right way. What started as local orders from nearby riders slowly grew into steady dealer relationships across the district.</p>
               <p>Today we assemble hundreds of units a year, from single custom builds to full dealer fleet orders, but the workshop still runs on the same principle it opened with — every bike gets built like it's going out under our own name, because it is.</p>
               <ul class="about-row-list">
-                <li>Founded on Hasilpur Road, Bahawalpur</li>
-                <li>Grown through repeat dealer trust, not shortcuts</li>
-                <li>Still hand-assembling every single unit</li>
+                <li data-reveal="up" style="--reveal-delay:120ms">Founded on Hasilpur Road, Bahawalpur</li>
+                <li data-reveal="up" style="--reveal-delay:200ms">Grown through repeat dealer trust, not shortcuts</li>
+                <li data-reveal="up" style="--reveal-delay:280ms">Still hand-assembling every single unit</li>
               </ul>
             </div>
           </div>
@@ -557,9 +591,9 @@
               <p>Every order starts with a build sheet listing the exact model, spec, and parts required. From there the unit moves station by station — frame and engine first, then electricals and body panels, then wheels, brakes, and suspension — with a technician signing off at each stage before the bike advances.</p>
               <p>Nothing skips a station, and nothing gets rushed to hit a delivery date. If a stage isn't ready to be signed off, the bike waits until it is.</p>
               <ul class="about-row-list">
-                <li>Build sheet logged for every unit</li>
-                <li>Fixed station order, no skipped steps</li>
-                <li>Sign-off required before advancing</li>
+                <li data-reveal="up" style="--reveal-delay:120ms">Build sheet logged for every unit</li>
+                <li data-reveal="up" style="--reveal-delay:200ms">Fixed station order, no skipped steps</li>
+                <li data-reveal="up" style="--reveal-delay:280ms">Sign-off required before advancing</li>
               </ul>
             </div>
           </div>
