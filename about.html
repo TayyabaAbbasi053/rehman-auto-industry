@@ -3,14 +3,395 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rehman Auto Industry - Home</title>
+  <title>Rehman Auto Industry - About</title>
+  <meta name="description" content="Rehman Auto Industry — a motorbike assembly workshop in Bahawalpur built on hand-assembly, two-point inspection, and genuine parts. Learn our story.">
+
   <link rel="stylesheet" href="css/style.css">
+
+  <!-- Hero + about-page styles: scoped so nothing here fights with css/style.css -->
+  <style>
+    /* Header floats transparently over the hero image, in white */
+    body.about .site-header {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: transparent;
+      border-bottom: none;
+      z-index: 30;
+    }
+    body.about .site-header nav ul li a { color: #ffffff; }
+    body.about .site-header nav ul li a:hover { color: #ffc9a8; }
+    body.about .site-header nav ul li a.active { color: var(--accent); }
+    body.about .hamburger-btn span { background-color: #ffffff; }
+
+    /* Full-bleed hero image, breaks out of main's padding */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      margin: -40px -40px 0;
+      width: calc(100% + 80px);
+      min-height: 520px;
+      display: flex;
+      align-items: center;
+      padding: 130px 40px 140px;
+    }
+
+    .hero-bg-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.6) 0%, rgba(0,0,0,0) 22%),
+        linear-gradient(90deg, rgba(0,0,0,.74) 0%, rgba(0,0,0,.30) 55%, rgba(0,0,0,.05) 100%);
+      z-index: 1;
+    }
+
+    .hero-text {
+      position: relative;
+      z-index: 2;
+      max-width: 560px;
+    }
+
+    .hero-text .eyebrow {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #ffc9a8;
+      margin-bottom: 12px;
+    }
+
+    .hero-text h1 {
+      font-size: clamp(28px, 3.6vw, 46px);
+      line-height: 1.1;
+      margin: 0 0 16px;
+      font-weight: bold;
+      color: #ffffff;
+    }
+
+    .hero-text p {
+      font-size: 15.5px;
+      line-height: 1.65;
+      color: #e6e6e6;
+      margin: 0;
+      max-width: 52ch;
+    }
+
+    /* ---------------- about intro card (overlaps hero) ---------------- */
+    .about-intro {
+      position: relative;
+      background-color: #ffffff;
+      padding: 0 0 20px;
+    }
+
+    .about-intro-card {
+      position: relative;
+      z-index: 5;
+      margin-top: -120px;
+      background-color: #ffffff;
+      border-radius: 14px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.16);
+      padding: 40px 36px;
+    }
+
+    .about-intro-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .about-intro-item {
+      text-align: center;
+      padding: 6px 26px;
+      border-left: 1px solid var(--line);
+    }
+
+    .about-intro-item:first-child {
+      border-left: none;
+    }
+
+    .about-intro-item .ico {
+      width: 50px;
+      height: 50px;
+      border-radius: 8px;
+      background-color: var(--ink);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    .about-intro-item .ico svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .about-intro-item:hover .ico {
+      background-color: var(--accent);
+      transform: scale(1.08) rotate(-4deg);
+    }
+
+    .about-intro-item h3 {
+      font-size: 17px;
+      margin-bottom: 8px;
+    }
+
+    .about-intro-item p {
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: #555555;
+    }
+
+    /* ---------------- alternating story / info rows ---------------- */
+    .about-story,
+    .about-process,
+    .about-growth {
+      background-color: #ffffff;
+    }
+
+    .about-workshop,
+    .about-team {
+      background-color: var(--grey-alt);
+    }
+
+    .about-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 90px;
+    }
+
+    .about-row {
+      display: flex;
+      align-items: center;
+      gap: 64px;
+    }
+
+    /* odd rows = image left / text right (default source order),
+       even rows = image right / text left */
+    .about-row.reverse {
+      flex-direction: row-reverse;
+    }
+
+    .about-row-media,
+    .about-row-content {
+      flex: 1 1 50%;
+      min-width: 0;
+    }
+
+    .about-row-media img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 10px;
+    }
+
+    .about-row-number {
+      display: inline-block;
+      font-size: 12.5px;
+      font-weight: bold;
+      letter-spacing: 0.08em;
+      color: var(--accent-dark);
+      background-color: var(--accent-tint);
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+    }
+
+    .about-row-content .eyebrow {
+      margin-bottom: 10px;
+    }
+
+    .about-row-content h2,
+    .about-row-content h3 {
+      font-size: 26px;
+      line-height: 1.25;
+      color: var(--ink);
+      margin-bottom: 14px;
+    }
+
+    .about-row-content > p {
+      font-size: 15px;
+      line-height: 1.7;
+      color: #555555;
+      margin-bottom: 16px;
+    }
+
+    .about-row-content > p:last-of-type {
+      margin-bottom: 22px;
+    }
+
+    .about-row-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .about-row-list li {
+      position: relative;
+      padding-left: 28px;
+      font-size: 14px;
+      color: #333333;
+    }
+
+    .about-row-list li::before {
+      content: "\2713";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 18px;
+      height: 18px;
+      line-height: 18px;
+      text-align: center;
+      border-radius: 50%;
+      background-color: var(--accent);
+      color: #ffffff;
+      font-size: 10px;
+      font-weight: bold;
+    }
+
+    /* ---------------- values grid ---------------- */
+    .about-values {
+      background-color: var(--grey-alt);
+    }
+
+    .value-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 22px;
+    }
+
+    .value-card {
+      background-color: #ffffff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 28px 22px;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    .value-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 30px rgba(0,0,0,0.09);
+      border-color: transparent;
+    }
+
+    .value-card .ico {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background-color: var(--accent-tint);
+      color: var(--accent-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+      transition: transform 0.3s ease;
+    }
+
+    .value-card:hover .ico {
+      transform: scale(1.1);
+    }
+
+    .value-card .ico svg {
+      width: 22px;
+      height: 22px;
+    }
+
+    .value-card h3 {
+      font-size: 15.5px;
+      margin-bottom: 8px;
+    }
+
+    .value-card p {
+      font-size: 13px;
+      line-height: 1.6;
+      color: #555555;
+    }
+
+    /* ---------------- mobile ---------------- */
+    @media (max-width: 900px) {
+      .value-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        margin: -24px -20px 0;
+        width: calc(100% + 40px);
+        min-height: 440px;
+        padding: 100px 20px 150px;
+      }
+      .hero-text {
+        max-width: none;
+      }
+
+      .about-intro-card {
+        margin-top: -128px;
+        padding: 28px 20px;
+      }
+
+      .about-intro-grid {
+        grid-template-columns: 1fr;
+        gap: 22px;
+      }
+
+      .about-intro-item {
+        border-left: none;
+        border-top: 1px solid var(--line);
+        padding: 20px 8px 0;
+      }
+
+      .about-intro-item:first-child {
+        border-top: none;
+        padding-top: 6px;
+      }
+
+      .about-rows {
+        gap: 56px;
+      }
+
+      .about-row,
+      .about-row.reverse {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 22px;
+      }
+
+      .about-row-content h2,
+      .about-row-content h3 {
+        font-size: 21px;
+      }
+
+      .value-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+
+      .value-card {
+        padding: 22px 16px;
+      }
+    }
+  </style>
 </head>
-<body>
+<body class="about">
 
   <header class="site-header">
     <div class="logo">
-      <img src="images/logo.png" alt="Rehman Auto Industry Logo">
+      <img src="images/logo.svg" alt="Rehman Auto Industry Logo">
     </div>
 
     <nav class="desktop-nav">
@@ -18,10 +399,14 @@
         <li><a href="index.html">Home</a></li>
         <li><a href="products.html">Products</a></li>
         <li><a href="services.html">Services</a></li>
-        <li><a href="about.html">About</a></li>
+        <li><a href="about.html" class="active">About</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
     </nav>
+
+    <div class="header-actions">
+      <a href="contact.html" class="btn btn-outline-light">Get a Quote</a>
+    </div>
 
     <button class="hamburger-btn" id="hamburgerBtn" aria-label="Open menu">
       <span></span>
@@ -46,14 +431,275 @@
   <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
   <main>
-    <!-- page content goes here -->
+
+    <section class="hero">
+      <img class="hero-bg-img" src="images/hero-about.svg" alt="Technicians working across the Rehman Auto Industry assembly floor">
+
+      <div class="hero-text">
+        <span class="eyebrow" data-reveal="up">About Rehman Auto Industry</span>
+        <h1 data-reveal="up" style="--reveal-delay:120ms">Every bike starts with our name on the line.</h1>
+        <p data-reveal="up" style="--reveal-delay:240ms">We're a motorbike assembly workshop on Hasilpur Road, Bahawalpur — built by people who'd rather do a job right than do it twice. Here's who we are, how we work, and why hundreds of riders and dealers trust what leaves our floor.</p>
+      </div>
+    </section>
+
+    <!-- ================= ABOUT INTRO CARD (overlaps hero) ================= -->
+    <section class="about-intro">
+      <div class="container">
+        <div class="about-intro-card" data-reveal="up">
+          <div class="about-intro-grid">
+
+            <div class="about-intro-item">
+              <span class="ico">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 1 1-5.4 5.4L4 17v3h3l5.3-5.3a4 4 0 1 1 5.4-5.4z"/></svg>
+              </span>
+              <h3>Hand Assembly</h3>
+              <p>Every unit is built frame-up by trained technicians, torqued to spec at each stage.</p>
+            </div>
+
+            <div class="about-intro-item">
+              <span class="ico">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+              </span>
+              <h3>Quality Checked</h3>
+              <p>A two-point inspection, mid-build and final, before anything leaves the workshop.</p>
+            </div>
+
+            <div class="about-intro-item">
+              <span class="ico">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/><path d="M4 4h2l1.5 12h10L19 8H7.2"/></svg>
+              </span>
+              <h3>Genuine Parts</h3>
+              <p>Sourced only through vetted suppliers — no shortcuts, no grey-market swaps.</p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= OUR STORY ================= -->
+    <section class="about-story">
+      <div class="container">
+        <div class="about-rows">
+
+          <!-- 01 -->
+          <div class="about-row" data-reveal="fade">
+            <div class="about-row-media" data-reveal="left">
+              <img src="images/a1.svg" alt="Early days of the Rehman Auto Industry workshop on Hasilpur Road">
+            </div>
+            <div class="about-row-content" data-reveal="right">
+              <span class="eyebrow">Our story</span>
+              <h2>Started small, built to last.</h2>
+              <p>Rehman Auto Industry began as a small assembly bay on Hasilpur Road, Bahawalpur, with a handful of technicians and one rule that never changed: nothing leaves the floor unless it's built the right way. What started as local orders from nearby riders slowly grew into steady dealer relationships across the district.</p>
+              <p>Today we assemble hundreds of units a year, from single custom builds to full dealer fleet orders, but the workshop still runs on the same principle it opened with — every bike gets built like it's going out under our own name, because it is.</p>
+              <ul class="about-row-list">
+                <li>Founded on Hasilpur Road, Bahawalpur</li>
+                <li>Grown through repeat dealer trust, not shortcuts</li>
+                <li>Still hand-assembling every single unit</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- 02 -->
+          <div class="about-row reverse" data-reveal="fade">
+            <div class="about-row-media" data-reveal="right">
+              <img src="images/a2.svg" alt="Wide view of the Rehman Auto Industry assembly floor and tool stations">
+            </div>
+            <div class="about-row-content" data-reveal="left">
+              <span class="eyebrow">Our workshop</span>
+              <h2>A floor built around the build, not around us.</h2>
+              <p>Our workshop is laid out as a fixed sequence of stations — frame, engine, electricals, body, wheels, and final inspection — so every bike moves through the same checkpoints in the same order, whether it's one unit or twenty. Each station is stocked with the tools and torque references specific to that stage, which keeps the work consistent no matter which technician is on it that day.</p>
+              <p>We keep a dedicated bay for fleet and dealer orders separate from custom single builds, so batch work never slows down someone waiting on their one bike, and vice versa.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= STATS ================= -->
+    <section class="stats-strip">
+      <div class="container">
+        <div class="stats-grid">
+          <div class="stat-item" data-reveal="up">
+            <span class="stat-number" data-counter="500" data-suffix="+">0</span>
+            <span class="stat-label">Bikes Assembled</span>
+          </div>
+          <div class="stat-item" data-reveal="up" style="--reveal-delay:80ms">
+            <span class="stat-number" data-counter="6" data-suffix="+">0</span>
+            <span class="stat-label">Years of Experience</span>
+          </div>
+          <div class="stat-item" data-reveal="up" style="--reveal-delay:160ms">
+            <span class="stat-number" data-counter="30" data-suffix="+">0</span>
+            <span class="stat-label">Dealer Partners</span>
+          </div>
+          <div class="stat-item" data-reveal="up" style="--reveal-delay:240ms">
+            <span class="stat-number" data-counter="100" data-suffix="%">0</span>
+            <span class="stat-label">Quality Inspected</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= OUR PROCESS ================= -->
+    <section class="about-process">
+      <div class="container">
+        <div class="about-rows">
+
+          <!-- 03 -->
+          <div class="about-row" data-reveal="fade">
+            <div class="about-row-media" data-reveal="left">
+              <img src="images/a3.svg" alt="Technician torquing bolts on a motorbike frame during assembly">
+            </div>
+            <div class="about-row-content" data-reveal="right">
+              <span class="about-row-number" data-reveal="zoom" style="--reveal-delay:80ms">01</span>
+              <h3>From intake to inspection.</h3>
+              <p>Every order starts with a build sheet listing the exact model, spec, and parts required. From there the unit moves station by station — frame and engine first, then electricals and body panels, then wheels, brakes, and suspension — with a technician signing off at each stage before the bike advances.</p>
+              <p>Nothing skips a station, and nothing gets rushed to hit a delivery date. If a stage isn't ready to be signed off, the bike waits until it is.</p>
+              <ul class="about-row-list">
+                <li>Build sheet logged for every unit</li>
+                <li>Fixed station order, no skipped steps</li>
+                <li>Sign-off required before advancing</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- 04 -->
+          <div class="about-row reverse" data-reveal="fade">
+            <div class="about-row-media" data-reveal="right">
+              <img src="images/a4.svg" alt="Final quality inspection checklist being completed on a finished bike">
+            </div>
+            <div class="about-row-content" data-reveal="left">
+              <span class="about-row-number" data-reveal="zoom" style="--reveal-delay:80ms">02</span>
+              <h3>Checked twice, not once.</h3>
+              <p>Midway through assembly, a technician other than the one building the unit runs a torque and alignment check. At final handover, a second, more thorough inspection covers brakes, electricals, fluid levels, and overall fit and finish before the bike is cleared for delivery.</p>
+              <p>Every inspection is recorded against that unit's build sheet, so if a question ever comes up down the line, we can trace exactly what was checked, by whom, and when.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= OUR TEAM ================= -->
+    <section class="about-team">
+      <div class="container">
+        <div class="about-rows">
+
+          <!-- 05 -->
+          <div class="about-row" data-reveal="fade">
+            <div class="about-row-media" data-reveal="left">
+              <img src="images/a5.svg" alt="Team of trained technicians working together at Rehman Auto Industry">
+            </div>
+            <div class="about-row-content" data-reveal="right">
+              <span class="eyebrow">Our people</span>
+              <h2>Technicians who know the bike, not just the checklist.</h2>
+              <p>Every technician on our floor trains on the specific fitment and torque spec of the models we assemble before they're signed off to work a station unsupervised. Most of our senior team has been with us for years, which means the person tightening your headset bearing has probably done it a thousand times before.</p>
+              <p>We keep the team small enough that everyone knows the standard by heart, and big enough to take on fleet orders without cutting corners on turnaround.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= OUR VALUES ================= -->
+    <section class="about-values">
+      <div class="container">
+        <div class="section-head" data-reveal="up">
+          <p class="eyebrow">What we stand for</p>
+          <h2>The standard behind every unit.</h2>
+          <p>These aren't slogans on a wall — they're the checks every bike has to pass before it's allowed to leave.</p>
+        </div>
+
+        <div class="value-grid">
+
+          <div class="value-card" data-reveal="up">
+            <span class="ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/></svg>
+            </span>
+            <h3>Integrity</h3>
+            <p>No shortcuts, no grey-market swaps — what we say goes into a bike is what actually goes in.</p>
+          </div>
+
+          <div class="value-card" data-reveal="up" style="--reveal-delay:80ms">
+            <span class="ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 1 1-5.4 5.4L4 17v3h3l5.3-5.3a4 4 0 1 1 5.4-5.4z"/></svg>
+            </span>
+            <h3>Precision</h3>
+            <p>Torqued to spec, aligned to spec, checked to spec — every time, on every unit.</p>
+          </div>
+
+          <div class="value-card" data-reveal="up" style="--reveal-delay:160ms">
+            <span class="ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+            </span>
+            <h3>Consistency</h3>
+            <p>The same station order, the same checklist, whether it's one bike or a fleet of twenty.</p>
+          </div>
+
+          <div class="value-card" data-reveal="up" style="--reveal-delay:240ms">
+            <span class="ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </span>
+            <h3>Trust</h3>
+            <p>Built through repeat dealer relationships, not a single fast sale.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= GROWTH / CTA ================= -->
+    <section class="about-growth">
+      <div class="container">
+        <div class="about-rows">
+
+          <!-- 06 -->
+          <div class="about-row" data-reveal="fade">
+            <div class="about-row-media" data-reveal="left">
+              <img src="images/a6.svg" alt="Delivery bay with completed bikes ready for dealer partners">
+            </div>
+            <div class="about-row-content" data-reveal="right">
+              <span class="eyebrow">Where we're headed</span>
+              <h2>Growing with the dealers who grew with us.</h2>
+              <p>We've built our dealer network the slow way — one reliable delivery at a time — and it's grown into steady fleet orders across Bahawalpur and beyond. As demand has grown, we've added stations and technicians without changing the process that got us here in the first place.</p>
+              <p>Whether you're a rider looking for one hand-built bike or a dealer looking for a partner who can hold a delivery schedule, our floor runs the same way for both.</p>
+              <a href="contact.html" class="btn btn-primary">Get in Touch</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= BRAND STRIP ================= -->
+    <section class="brand-strip">
+      <div class="container">
+        <p class="label" data-reveal="up">Genuine parts from brands we trust</p>
+        <div class="brand-row">
+          <img src="images/b-1.png" alt="Honda" data-reveal="fade">
+          <img src="images/b-2.png" alt="Yamaha" data-reveal="fade">
+          <img src="images/b-3.png" alt="Suzuki" data-reveal="fade">
+          <img src="images/b-4.png" alt="United" data-reveal="fade">
+          <img src="images/b-5.png" alt="Road Prince" data-reveal="fade">
+          <img src="images/b-6.png" alt="Habib" data-reveal="fade">
+        </div>
+      </div>
+    </section>
+
   </main>
+
+  <!-- Back to top -->
+  <button id="backToTop" class="back-to-top" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
 
   <footer class="site-footer">
     <div class="footer-columns">
       <div class="footer-col">
-        <img src="images/logo.png" alt="Rehman Auto Industry Logo" class="footer-logo">
-        <p class="footer-tagline">Quality motorbike assembly since day one.</p>
+        <img src="images/logo.svg" alt="Rehman Auto Industry Logo" class="footer-logo">
+        <p class="footer-tagline">Quality bike assembly since day one.</p>
       </div>
 
       <div class="footer-col">
@@ -70,7 +716,7 @@
       <div class="footer-col">
         <h4>Our Services</h4>
         <ul>
-          <li><a href="services.html">Motorbike Assembly</a></li>
+          <li><a href="services.html">Bike Assembly</a></li>
           <li><a href="services.html">Quality Inspection</a></li>
           <li><a href="services.html">Spare Parts</a></li>
         </ul>
@@ -88,13 +734,24 @@
 
     <!-- Minimal mobile footer -->
     <div class="footer-mobile">
-      <img src="images/logo.png" alt="Rehman Auto Industry Logo" class="footer-logo-mobile">
+      <img src="images/logo.svg" alt="Rehman Auto Industry Logo" class="footer-logo-mobile">
+      <nav class="footer-mobile-nav">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="products.html">Products</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
     </div>
 
     <div class="footer-bottom">
       &copy; 2026 Rehman Auto Industry. All Rights Reserved.
     </div>
   </footer>
+
   <script src="js/script.js"></script>
+  <script src="js/animations.js"></script>
 </body>
 </html>
